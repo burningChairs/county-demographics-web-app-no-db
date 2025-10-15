@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>State Facts</title>
-    </head>
-    <body>
+<head>
+    <title>State and County Facts</title>
+</head>
+<body>
 
-        <form action="/showFact">
-          <select name="state"> <!-- add onchange="this.form.submit()" to submit/update the form when an option is selected.  Usefull for then displaying county options. -->
+    <form action="/showFact">
+        <label for="state">Select a state:</label>
+        <select name="state" onchange="this.form.submit()">
             {{ state_options }}
-          </select>
-          <br><br>
-          <input type="submit" value="Get a fun fact!">
-        </form>
-        <div id="funFact">
-            <p>{{ funFact }}</p>
-        </div>
+        </select>
 
-    </body>
+        {% if selected_state %}
+            <br><br>
+            <label for="county">Now select a county in {{ selected_state }}:</label>
+            <select name="county">
+                {{ counties }}
+            </select>
+            <br><br>
+            <input type="submit" value="Show County Fact">
+        {% else %}
+            <br><br>
+            <input type="submit" value="Get State Facts">
+        {% endif %}
+    </form>
+
+    <div id="funFacts">
+        {% if funFact %}
+            <p><strong>Fun Fact 1:</strong> {{ funFact }}</p>
+        {% endif %}
+        {% if educationFact %}
+            <p><strong>Fun Fact 2:</strong> {{ educationFact }}</p>
+        {% endif %}
+        {% if countyFact %}
+            <p><strong>County Fact:</strong> {{ countyFact }}</p>
+        {% endif %}
+    </div>
+
+</body>
 </html>
